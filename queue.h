@@ -35,5 +35,4 @@ void setting_old(position_type *inserted_position);//"envelhece" todos as posiç
 void print_queue(position_type *root);//printa toda a fila
 int is_empty_queue(position_type *root);//verifica se a fila está vazia ou não
 
-
 #endif

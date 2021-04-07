@@ -1,8 +1,9 @@
 #include "queue.h"
-#include "threads.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+int get_random_number(int max, int min);//gera um número aleatório com base no máximo e mínimo
 
 people_type peoples[queue_size] = {
     {0, "Sueli", 0, 0},
@@ -10,8 +11,6 @@ people_type peoples[queue_size] = {
     {2, "Vanda", 2, 0},
     {3, "Maria", 3, 0},
 };
-
-int get_random_number(int max, int min);//gera um número aleatório com base no máximo e mínimo
 
 int main(int argc, char **argv)
 {
@@ -27,10 +26,8 @@ int main(int argc, char **argv)
     root = insert_into_queue(root, new_position2);
     root = insert_into_queue(root, new_position3);
 
-    for(int i = 0; i < 15; i++)
-    {
-        printf("%d\n", get_random_number(5, 3));
-    }
+
+
     
     return 0;
 }
