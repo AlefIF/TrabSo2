@@ -10,7 +10,7 @@ position_type *create_position(people_type *person)
 
     position->person = person;
     position->next = NULL;
-    position->position_number = 0;
+    // position->in_queue = 1;
 
     return position;
 }
@@ -18,13 +18,14 @@ position_type *create_position(people_type *person)
 //adiciona uma pessoa na fila de acordo com a sua prioridade
 position_type *insert_into_queue(position_type *root, position_type *new_position)
 {
+    //new_position->in_queue = 1;
     position_type *insert_position = get_insert_position(root, new_position->person->priority);
 
     if(insert_position == NULL)
     {
         insert_position = new_position;
-        insert_position->next = root;
-        root = insert_position; /*  MODIFICAR  */
+        insert_position->next = root; //receberia o valor
+        root = insert_position;
     }else
     if(insert_position->next == NULL)
     {
@@ -52,7 +53,7 @@ void setting_old(position_type *inserted_position)
     {
         current_position = current_position->next;
 
-        if(current_position->person->current_aging == 2)
+        if(current_position->person->current_aging == 1)
         {
             current_position->person->priority++;
             current_position->person->current_aging = 0;
@@ -63,20 +64,16 @@ void setting_old(position_type *inserted_position)
     }
 }
 
-void exit_queue()
+position_type *exit_queue(position_type *root)
 {
     //muda o nó raiz da fila para o próximo
     //caso seja o final, chama a função de desalocar da fila
-
-
-}
-
-void clean_people()
-{
-    //desaloca o espaço de memória da pessoa
-    //destoi a thread
-
-
+    if(is_empty_queue(root))
+        return NULL;
+    position_type *aux = root->next;
+    free(root);
+    return aux;
+    
 }
 
 void print_queue(position_type *root)
@@ -90,14 +87,10 @@ void print_queue(position_type *root)
 
     position_type *position = root;
 
-    do
-    {
+    while(position){
         printf("%s está na fila, priority: %d\n", position->person->name, position->person->priority);
-
-        if(position->next != NULL)
-            position = position->next;
-
-    }while(position->next != NULL);
+        position = position->next;
+    }
 
 }
 
@@ -105,7 +98,8 @@ void print_queue(position_type *root)
 //verifica se o primeiro elemento é nulo
 int is_empty_queue(position_type *root)
 {
-    if(root->person == NULL)
+
+    if(root == NULL || root->person == NULL)
         return True;
 
     return False;
