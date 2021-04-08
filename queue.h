@@ -19,7 +19,7 @@ typedef struct
 
 typedef struct PositionType
 {
-    people_type *person;
+    people_type person;
     int in_queue;
 
     struct PositionType *next;
@@ -29,7 +29,7 @@ typedef struct PositionType
 
 position_type *insert_into_queue(position_type *root, position_type *new_position);//insere posição na fila
 position_type *get_insert_position(position_type *root, int priority);//busca a posição a inserir o próximo elemento
-position_type *create_position(people_type *person);//Cria uma nova posição da fila (Não insere na fila)
+position_type *create_position(people_type person);//Cria uma nova posição da fila (Não insere na fila)
 position_type *exit_queue(position_type *root);//remove a primeira posição da fila
 void setting_old(position_type *inserted_position);//"envelhece" todos as posições posteriores aquela que foi inserida
 void print_queue(position_type *root);//printa toda a fila

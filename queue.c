@@ -4,13 +4,13 @@
 
 
 //Inicializa a fila vazia
-position_type *create_position(people_type *person)
+position_type *create_position(people_type person)
 {
     position_type *position = malloc(sizeof(position_type));
 
     position->person = person;
     position->next = NULL;
-    // position->in_queue = 1;
+    position->in_queue = 0;
 
     return position;
 }
@@ -18,8 +18,8 @@ position_type *create_position(people_type *person)
 //adiciona uma pessoa na fila de acordo com a sua prioridade
 position_type *insert_into_queue(position_type *root, position_type *new_position)
 {
-    //new_position->in_queue = 1;
-    position_type *insert_position = get_insert_position(root, new_position->person->priority);
+    new_position->in_queue = 1;
+    position_type *insert_position = get_insert_position(root, new_position->person.priority);
 
     if(insert_position == NULL)
     {
@@ -53,13 +53,15 @@ void setting_old(position_type *inserted_position)
     {
         current_position = current_position->next;
 
-        if(current_position->person->current_aging == 1)
-        {
-            current_position->person->priority++;
-            current_position->person->current_aging = 0;
+        if(current_position->person.current_aging == 1)
+        {   
+            printf("Gerente detectou inanição, aumentando prioridade de %s\n", current_position->person.name);
+            current_position->person.priority++;
+            printf("%d", current_position->person.priority);
+            current_position->person.current_aging = 0;
         }else
         {
-            current_position->person->current_aging++;
+            current_position->person.current_aging++;
         }
     }
 }
@@ -70,10 +72,11 @@ position_type *exit_queue(position_type *root)
     //caso seja o final, chama a função de desalocar da fila
     if(is_empty_queue(root))
         return NULL;
+
+    root->in_queue = 0;
     position_type *aux = root->next;
     free(root);
     return aux;
-    
 }
 
 void print_queue(position_type *root)
@@ -81,16 +84,18 @@ void print_queue(position_type *root)
     //percorre todas as posições da fila e printa
     if(is_empty_queue(root))
     {
-        printf("A fila está vazia\n");
+        printf("{fila: }\n");
         return;
     }
 
     position_type *position = root;
 
+    printf("{fila:");
     while(position){
-        printf("%s está na fila, priority: %d\n", position->person->name, position->person->priority);
+        printf("%c", position->person.name[0]);
         position = position->next;
     }
+    printf("}\n");
 
 }
 
@@ -99,7 +104,7 @@ void print_queue(position_type *root)
 int is_empty_queue(position_type *root)
 {
 
-    if(root == NULL || root->person == NULL)
+    if(root == NULL)
         return True;
 
     return False;
@@ -109,20 +114,18 @@ int is_empty_queue(position_type *root)
 position_type *get_insert_position(position_type *root, int priority)
 {
     if(is_empty_queue(root))
-    {
-        printf("A fila está vazia\n");
         return NULL;
-    }
+    
 
     position_type *aux = root;
     position_type *previous_aux = NULL;
 
     do
     {
-        if(aux->person->priority < priority)
+        if(aux->person.priority <= priority)
             return previous_aux;
 
-        if(aux->person->priority >= priority)
+        if(aux->person.priority > priority)
             previous_aux = aux;
         
         if(aux->next != NULL)
