@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#define DEFAULT_RUNS 2
+#define DEFAULT_RUNS 5
 
 int get_random_number(int max, int min);//gera um número aleatório com base no máximo e mínimo
 void init_threads();
@@ -23,6 +23,10 @@ people_type peoples[queue_size] = {
     {1, "Paula", 1, 0},
     {2, "Vanda", 2, 0},
     {3, "Maria", 3, 0},
+    {4, "Silas", 0, 0},
+    {5, "Pedro", 1, 0},
+    {6, "Valter", 2, 0},
+    {7, "Marcos", 3, 0},
 };
 
 int run_times;

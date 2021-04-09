@@ -2,7 +2,7 @@
 #define QUEUE_H
 
 #define name_size 10
-#define queue_size 4
+#define queue_size 8
 
 #define True 1
 #define False 0

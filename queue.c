@@ -120,10 +120,10 @@ position_type *get_insert_position(position_type *root, int priority)
 
     do
     {
-        if(aux->person.priority < priority)
+        if(aux->person.priority <= priority)
             return previous_aux;
 
-        if(aux->person.priority >= priority)
+        if(aux->person.priority > priority)
             previous_aux = aux;
         
         if(aux->next != NULL)
