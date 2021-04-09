@@ -57,7 +57,6 @@ void setting_old(position_type *inserted_position)
         {   
             printf("Gerente detectou inanição, aumentando prioridade de %s\n", current_position->person.name);
             current_position->person.priority++;
-            printf("%d", current_position->person.priority);
             current_position->person.current_aging = 0;
         }else
         {
@@ -99,7 +98,6 @@ void print_queue(position_type *root)
 
 }
 
-
 //verifica se o primeiro elemento é nulo
 int is_empty_queue(position_type *root)
 {
@@ -122,10 +120,10 @@ position_type *get_insert_position(position_type *root, int priority)
 
     do
     {
-        if(aux->person.priority <= priority)
+        if(aux->person.priority < priority)
             return previous_aux;
 
-        if(aux->person.priority > priority)
+        if(aux->person.priority >= priority)
             previous_aux = aux;
         
         if(aux->next != NULL)
