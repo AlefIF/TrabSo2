@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#define DEFAULT_RUNS 5
+#define DEFAULT_RUNS 2
 
 int get_random_number(int max, int min);//gera um número aleatório com base no máximo e mínimo
 void init_threads();
@@ -15,7 +15,6 @@ void working(position_type *position);
 void go_to_queue(position_type *position);
 
 pthread_mutex_t mutex_fila  = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t mutex_caixa = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t thread_condition[queue_size];
 
 people_type peoples[queue_size] = {
@@ -87,7 +86,6 @@ void *thread(void *args)
             pthread_mutex_unlock(&mutex_fila);
         }else
         {
-            // printf("Vou chamar a %s", root->person.name);
             pthread_cond_signal(&thread_condition[root->person.id]);
         }
         

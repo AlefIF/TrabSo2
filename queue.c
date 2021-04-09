@@ -24,7 +24,7 @@ position_type *insert_into_queue(position_type *root, position_type *new_positio
     if(insert_position == NULL)
     {
         insert_position = new_position;
-        insert_position->next = root; //receberia o valor
+        insert_position->next = root; 
         root = insert_position;
     }else
     if(insert_position->next == NULL)
